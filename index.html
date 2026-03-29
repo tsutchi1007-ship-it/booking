@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>面談予約</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F7F5F0;
+    --surface: #FFFFFF;
+    --accent: #2C4A3E;
+    --accent-light: #E8EFE9;
+    --accent-mid: #4A7C6F;
+    --text: #1A1A1A;
+    --muted: #6B6B6B;
+    --border: #E2DDD6;
+    --error: #C0392B;
+    --success: #2C4A3E;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2rem 1rem 4rem;
+  }
+  .wrapper { width: 100%; max-width: 480px; }
+
+  /* Header */
+  .header { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+  .header-label { font-size: 11px; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
+  .header-title { font-family: 'Noto Serif JP', serif; font-size: 22px; font-weight: 400; color: var(--text); line-height: 1.4; margin-bottom: 6px; }
+  .header-meta { font-size: 13px; color: var(--muted); display: flex; gap: 16px; }
+  .header-meta span::before { content: ''; display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: var(--accent-mid); vertical-align: middle; margin-right: 6px; }
+
+  /* Steps */
+  .steps { display: flex; align-items: center; margin-bottom: 2rem; }
+  .step-dot { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 500; flex-shrink: 0; transition: all 0.3s; }
+  .step-dot.active { background: var(--accent); color: white; }
+  .step-dot.done { background: var(--accent-light); color: var(--accent); }
+  .step-dot.inactive { background: var(--border); color: var(--muted); }
+  .step-line { flex: 1; height: 1px; background: var(--border); margin: 0 6px; }
+  .step-label { font-size: 11px; color: var(--muted); text-align: center; margin-top: 4px; }
+
+  /* Card */
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; }
+  .card-section { font-size: 11px; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; margin-bottom: 1rem; }
+
+  /* Calendar */
+  .cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+  .cal-month { font-size: 15px; font-weight: 500; }
+  .cal-nav { background: none; border: 1px solid var(--border); border-radius: 6px; width: 28px; height: 28px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 14px; }
+  .cal-nav:hover { background: var(--bg); }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+  .cal-label { text-align: center; font-size: 11px; color: var(--muted); padding: 4px 0; }
+  .cal-cell { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 13px; border-radius: 6px; cursor: default; color: var(--muted); transition: all 0.15s; }
+  .cal-cell.available { background: var(--accent-light); color: var(--accent); cursor: pointer; font-weight: 500; }
+  .cal-cell.available:hover { background: #C8DCC9; }
+  .cal-cell.selected { background: var(--accent); color: white; }
+  .cal-cell.past { opacity: 0.35; }
+
+  /* Time slots */
+  .slots { display: flex; flex-wrap: wrap; gap: 8px; }
+  .slot { padding: 7px 16px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; cursor: pointer; color: var(--text); background: var(--surface); transition: all 0.15s; }
+  .slot:hover { border-color: var(--accent-mid); color: var(--accent); }
+  .slot.selected { background: var(--accent); color: white; border-color: var(--accent); }
+
+  /* Form */
+  .field { margin-bottom: 14px; }
+  .field label { font-size: 12px; color: var(--muted); display: block; margin-bottom: 5px; }
+  .field input, .field textarea {
+    width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px;
+    font-size: 14px; font-family: 'DM Sans', sans-serif; background: var(--surface); color: var(--text);
+    outline: none; transition: border-color 0.15s;
+  }
+  .field input:focus, .field textarea:focus { border-color: var(--accent-mid); }
+  .field textarea { min-height: 80px; resize: vertical; }
+
+  /* Confirm */
+  .confirm-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--bg); font-size: 13px; }
+  .confirm-item:last-child { border-bottom: none; }
+  .confirm-key { color: var(--muted); }
+  .confirm-val { color: var(--text); font-weight: 500; text-align: right; max-width: 65%; }
+
+  /* Button */
+  .btn { width: 100%; padding: 11px; border-radius: 8px; border: none; font-size: 14px; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.2s; }
+  .btn-primary { background: var(--accent); color: white; font-weight: 500; }
+  .btn-primary:hover { background: #1f3629; }
+  .btn-ghost { background: none; border: 1px solid var(--border); color: var(--muted); margin-bottom: 8px; }
+  .btn-ghost:hover { background: var(--bg); }
+
+  /* Badge */
+  .badge { display: inline-block; background: var(--accent-light); color: var(--accent); font-size: 12px; padding: 4px 10px; border-radius: 20px; margin-bottom: 12px; }
+
+  /* Success */
+  .success { text-align: center; padding: 2.5rem 1rem; }
+  .check-circle { width: 52px; height: 52px; border-radius: 50%; background: var(--accent-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; }
+  .success-title { font-family: 'Noto Serif JP', serif; font-size: 18px; font-weight: 400; margin-bottom: 8px; }
+  .success-sub { font-size: 13px; color: var(--muted); }
+
+  /* Error */
+  .error-msg { font-size: 12px; color: var(--error); margin-top: 4px; }
+
+  /* Loading */
+  .loading { display: none; text-align: center; padding: 1rem; }
+  .spinner { width: 20px; height: 20px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="header">
+    <div class="header-label">Online Booking</div>
+    <div class="header-title">面談のご予約</div>
+    <div class="header-meta">
+      <span>30分</span>
+      <span>オンライン</span>
+    </div>
+  </div>
+
+  <!-- Step indicator -->
+  <div class="steps" id="stepIndicator">
+    <div>
+      <div class="step-dot active" id="sd1">1</div>
+    </div>
+    <div class="step-line"></div>
+    <div>
+      <div class="step-dot inactive" id="sd2">2</div>
+    </div>
+    <div class="step-line"></div>
+    <div>
+      <div class="step-dot inactive" id="sd3">3</div>
+    </div>
+  </div>
+
+  <!-- Step 1: Date & Time -->
+  <div id="step1">
+    <div class="card">
+      <div class="card-section">日付を選択</div>
+      <div class="cal-header">
+        <button class="cal-nav" id="prevMonth">‹</button>
+        <span class="cal-month" id="calMonthLabel"></span>
+        <button class="cal-nav" id="nextMonth">›</button>
+      </div>
+      <div class="cal-grid" id="calLabels"></div>
+      <div class="cal-grid" id="calGrid" style="margin-top:4px;"></div>
+    </div>
+
+    <div class="card hidden" id="timeCard">
+      <div class="card-section" id="timeLabel">時間を選択</div>
+      <div class="slots" id="timeSlots"></div>
+      <div class="loading" id="loadingSlots"><div class="spinner"></div></div>
+    </div>
+  </div>
+
+  <!-- Step 2: Info -->
+  <div id="step2" class="hidden">
+    <div class="card">
+      <div class="badge" id="selectedBadge"></div>
+      <div class="card-section">お名前と連絡先</div>
+      <div class="field">
+        <label>お名前 *</label>
+        <input type="text" id="fname" placeholder="山田 太郎">
+        <div class="error-msg hidden" id="errName">お名前を入力してください</div>
+      </div>
+      <div class="field">
+        <label>メールアドレス *</label>
+        <input type="email" id="femail" placeholder="taro@example.com">
+        <div class="error-msg hidden" id="errEmail">正しいメールアドレスを入力してください</div>
+      </div>
+      <div class="card-section" style="margin-top:1rem;">予約の目的・内容</div>
+      <div class="field">
+        <label>ご用件 *</label>
+        <textarea id="fpurpose" placeholder="例：新規プロジェクトについてご相談したいです"></textarea>
+        <div class="error-msg hidden" id="errPurpose">ご用件を入力してください</div>
+      </div>
+      <button class="btn btn-ghost" onclick="goBack1()">← 日時を選び直す</button>
+      <button class="btn btn-primary" onclick="goStep3()">内容を確認する</button>
+    </div>
+  </div>
+
+  <!-- Step 3: Confirm -->
+  <div id="step3" class="hidden">
+    <div class="card">
+      <div class="card-section">予約内容の確認</div>
+      <div id="confirmRows"></div>
+      <div class="loading" id="loadingSubmit" style="margin:12px 0;"><div class="spinner"></div></div>
+      <div class="error-msg hidden" id="errSubmit" style="margin-bottom:8px;">送信中にエラーが発生しました。再度お試しください。</div>
+      <button class="btn btn-ghost" style="margin-top:14px;" onclick="goBack2()">← 情報を修正する</button>
+      <button class="btn btn-primary" id="submitBtn" onclick="submitBooking()">この内容で予約する</button>
+    </div>
+    <p style="text-align:center;font-size:11px;color:var(--muted);margin-top:8px;">予約確定後、確認メールをお送りします</p>
+  </div>
+
+  <!-- Success -->
+  <div id="stepSuccess" class="hidden">
+    <div class="card success">
+      <div class="check-circle">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <polyline points="4,11 9,16 18,5" stroke="#2C4A3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="success-title">ご予約が完了しました</div>
+      <p class="success-sub" id="successDetail"></p>
+      <p class="success-sub" style="margin-top:6px;">確認メールをご確認ください</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ============================================================
+  // ★ ここを自分のGoogle Apps Script URLに変更してください ★
+  // ============================================================
+  const GAS_URL = 'https://script.google.com/macros/s/AKfycby2VuDEy_PSIMos7HPPZOrhoTKVsDAbIPEeowWUpsrE7d-ct9T1D3rh2IfVW-A-4RKCCA/exec/exec';
+
+  let currentYear, currentMonth;
+  let selectedDate = null;
+  let selectedTime = null;
+  let availableDates = {};
+
+  const days = ['日','月','火','水','木','金','土'];
+
+  function init() {
+    const now = new Date();
+    currentYear = now.getFullYear();
+    currentMonth = now.getMonth();
+    renderCalendar();
+  }
+
+  function renderCalendar() {
+    const label = document.getElementById('calMonthLabel');
+    label.textContent = `${currentYear}年${currentMonth + 1}月`;
+
+    const labelsEl = document.getElementById('calLabels');
+    labelsEl.innerHTML = days.map(d => `<div class="cal-label">${d}</div>`).join('');
+
+    const grid = document.getElementById('calGrid');
+    grid.innerHTML = '';
+
+    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    const today = new Date();
+
+    for (let i = 0; i < firstDay; i++) {
+      grid.innerHTML += `<div class="cal-cell"></div>`;
+    }
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const date = new Date(currentYear, currentMonth, d);
+      const isPast = date < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const dateKey = `${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+
+      let cls = 'cal-cell';
+      let onclick = '';
+      if (!isPast) {
+        cls += ' available';
+        onclick = `onclick="selectDate('${dateKey}', ${d}, this)"`;
+      } else {
+        cls += ' past';
+      }
+      if (selectedDate === dateKey) cls += ' selected';
+
+      grid.innerHTML += `<div class="${cls}" ${onclick}>${d}</div>`;
+    }
+  }
+
+  document.getElementById('prevMonth').onclick = () => {
+    const now = new Date();
+    if (currentYear === now.getFullYear() && currentMonth === now.getMonth()) return;
+    currentMonth--;
+    if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+    renderCalendar();
+  };
+  document.getElementById('nextMonth').onclick = () => {
+    currentMonth++;
+    if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+    renderCalendar();
+  };
+
+  function selectDate(dateKey, day, el) {
+    selectedDate = dateKey;
+    selectedTime = null;
+    renderCalendar();
+
+    const timeCard = document.getElementById('timeCard');
+    timeCard.classList.remove('hidden');
+    document.getElementById('timeLabel').textContent = `${currentMonth+1}月${day}日の空き時間`;
+    document.getElementById('timeSlots').innerHTML = '';
+    document.getElementById('loadingSlots').style.display = 'block';
+
+    // Google Apps Scriptから空き時間を取得
+    fetch(`${GAS_URL}?action=getSlots&date=${dateKey}`)
+      .then(r => r.json())
+      .then(data => {
+        document.getElementById('loadingSlots').style.display = 'none';
+        const slots = data.slots || [];
+        if (slots.length === 0) {
+          document.getElementById('timeSlots').innerHTML = '<p style="font-size:13px;color:var(--muted);">この日は空き時間がありません</p>';
+          return;
+        }
+        slots.forEach(t => {
+          const el = document.createElement('div');
+          el.className = 'slot';
+          el.textContent = t;
+          el.onclick = () => {
+            document.querySelectorAll('.slot.selected').forEach(s => s.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedTime = t;
+            setTimeout(goStep2, 300);
+          };
+          document.getElementById('timeSlots').appendChild(el);
+        });
+      })
+      .catch(() => {
+        document.getElementById('loadingSlots').style.display = 'none';
+        document.getElementById('timeSlots').innerHTML = '<p style="font-size:13px;color:var(--error);">時間の取得に失敗しました</p>';
+      });
+  }
+
+  function goStep2() {
+    if (!selectedDate || !selectedTime) return;
+    document.getElementById('step1').classList.add('hidden');
+    document.getElementById('step2').classList.remove('hidden');
+    setStep(2);
+    const [y, m, d] = selectedDate.split('-');
+    document.getElementById('selectedBadge').textContent = `${parseInt(m)}月${parseInt(d)}日 ${selectedTime}〜`;
+  }
+
+  function goBack1() {
+    document.getElementById('step2').classList.add('hidden');
+    document.getElementById('step1').classList.remove('hidden');
+    setStep(1);
+  }
+
+  function goStep3() {
+    const name = document.getElementById('fname').value.trim();
+    const email = document.getElementById('femail').value.trim();
+    const purpose = document.getElementById('fpurpose').value.trim();
+    let valid = true;
+
+    document.getElementById('errName').classList.add('hidden');
+    document.getElementById('errEmail').classList.add('hidden');
+    document.getElementById('errPurpose').classList.add('hidden');
+
+    if (!name) { document.getElementById('errName').classList.remove('hidden'); valid = false; }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { document.getElementById('errEmail').classList.remove('hidden'); valid = false; }
+    if (!purpose) { document.getElementById('errPurpose').classList.remove('hidden'); valid = false; }
+    if (!valid) return;
+
+    document.getElementById('step2').classList.add('hidden');
+    document.getElementById('step3').classList.remove('hidden');
+    setStep(3);
+
+    const [y, m, d] = selectedDate.split('-');
+    const rows = [
+      ['日時', `${parseInt(m)}月${parseInt(d)}日 ${selectedTime}〜（30分）`],
+      ['お名前', name],
+      ['メール', email],
+      ['ご用件', purpose],
+    ];
+    document.getElementById('confirmRows').innerHTML = rows.map(([k,v]) =>
+      `<div class="confirm-item"><span class="confirm-key">${k}</span><span class="confirm-val">${v}</span></div>`
+    ).join('');
+  }
+
+  function goBack2() {
+    document.getElementById('step3').classList.add('hidden');
+    document.getElementById('step2').classList.remove('hidden');
+    setStep(2);
+  }
+
+  function submitBooking() {
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = '送信中...';
+    document.getElementById('loadingSubmit').style.display = 'block';
+    document.getElementById('errSubmit').classList.add('hidden');
+
+    const payload = {
+      action: 'createEvent',
+      date: selectedDate,
+      time: selectedTime,
+      name: document.getElementById('fname').value.trim(),
+      email: document.getElementById('femail').value.trim(),
+      purpose: document.getElementById('fpurpose').value.trim(),
+    };
+
+    fetch(GAS_URL, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    })
+      .then(r => r.json())
+      .then(data => {
+        document.getElementById('loadingSubmit').style.display = 'none';
+        if (data.success) {
+          document.getElementById('step3').classList.add('hidden');
+          document.getElementById('stepSuccess').classList.remove('hidden');
+          const [y, m, d] = selectedDate.split('-');
+          document.getElementById('successDetail').textContent =
+            `${parseInt(m)}月${parseInt(d)}日 ${selectedTime}からの面談が確定しました`;
+        } else {
+          document.getElementById('errSubmit').classList.remove('hidden');
+          btn.disabled = false;
+          btn.textContent = 'この内容で予約する';
+        }
+      })
+      .catch(() => {
+        document.getElementById('loadingSubmit').style.display = 'none';
+        document.getElementById('errSubmit').classList.remove('hidden');
+        btn.disabled = false;
+        btn.textContent = 'この内容で予約する';
+      });
+  }
+
+  function setStep(n) {
+    [1,2,3].forEach(i => {
+      const el = document.getElementById(`sd${i}`);
+      el.className = 'step-dot ' + (i < n ? 'done' : i === n ? 'active' : 'inactive');
+      el.textContent = i < n ? '✓' : i;
+    });
+  }
+
+  init();
+</script>
+</body>
+</html>
