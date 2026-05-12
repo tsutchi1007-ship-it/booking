@@ -219,7 +219,8 @@
   // ★ ここを自分のGoogle Apps Script URLに変更してください ★
   // ============================================================
   const GAS_URL = 'https://script.google.com/macros/s/AKfycby2VuDEy_PSIMos7HPPZOrhoTKVsDAbIPEeowWUpsrE7d-ct9T1D3rh2IfVW-A-4RKCCA/exec/exec';
-
+const urlParams = new URLSearchParams(window.location.search);
+const referralSource = urlParams.get('ref') || '';
   let currentYear, currentMonth;
   let selectedDate = null;
   let selectedTime = null;
@@ -390,6 +391,7 @@
       name: document.getElementById('fname').value.trim(),
       email: document.getElementById('femail').value.trim(),
       purpose: document.getElementById('fpurpose').value.trim(),
+　　　　ref: referralSource,  //
     };
 
     fetch(GAS_URL, {
