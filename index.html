@@ -105,6 +105,10 @@
     .hidden { display: none !important; }
     .spinner { width: 20px; height: 20px; margin: 17px auto; border: 2px solid #dce3df; border-top-color: var(--ink); border-radius: 50%; animation: spin .7s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
+
+    .site-footer { margin-top: 30px; text-align: center; color: var(--muted); font-size: 11px; }
+    .site-footer a { color: var(--muted); text-underline-offset: 3px; }
+    .site-footer a:hover { color: var(--ink); }
     @media (max-width: 820px) {
       .page { padding-top: 24px; }
       .brand { margin-bottom: 18px; }
@@ -185,6 +189,10 @@
         </div>
       </section>
     </div>
+
+    <footer class="site-footer">
+      <a href="./privacy.html">プライバシーポリシー</a>
+    </footer>
   </main>
 
   <script>
