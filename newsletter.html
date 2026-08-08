@@ -42,7 +42,7 @@
     body::after { bottom: -220px; left: -80px; }
     a { color: inherit; }
     .page { width: min(1040px, calc(100% - 32px)); margin: 0 auto; padding: 34px 0 56px; }
-    .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 44px; letter-spacing: .12em; font-weight: 700; text-decoration: none; }
+    .site-header { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 44px; }\n    .brand { display: flex; align-items: center; gap: 12px; letter-spacing: .12em; font-weight: 700; text-decoration: none; }\n    .site-nav { display: flex; align-items: center; gap: 8px; }\n    .site-nav a { padding: 10px 16px; border: 1px solid var(--line); border-radius: 999px; color: var(--ink); background: rgba(255,255,255,.48); font-size: 12px; font-weight: 700; text-decoration: none; transition: .2s; }\n    .site-nav a:hover { color: white; border-color: var(--ink); background: var(--ink); transform: translateY(-1px); }
     .brand-mark { width: 34px; height: 34px; border: 1px solid var(--ink); border-radius: 50%; display: grid; place-items: center; }
     .brand-mark::after { content: "∞"; font-size: 20px; }
     .hero { max-width: 720px; margin: 0 auto 28px; text-align: center; }
@@ -58,7 +58,7 @@
     .links a:hover { color: var(--ink); }
     @media (max-width: 600px) {
       .page { width: min(100% - 20px, 1040px); padding-top: 24px; }
-      .brand { margin-bottom: 32px; }
+      .site-header { margin-bottom: 32px; gap: 12px; }\n      .brand { gap: 8px; font-size: 12px; letter-spacing: .08em; }\n      .site-nav a { padding: 9px 12px; font-size: 11px; }
       .form-card { padding: 8px; border-radius: 20px; }
       .form-frame { height: 700px; border-radius: 14px; }
     }
@@ -78,7 +78,7 @@
 </head>
 <body>
   <main class="page">
-    <a class="brand" href="./index.html"><span class="brand-mark" aria-hidden="true"></span><span>UNLIMITED LIFE</span></a>
+    <header class="site-header">\n      <a class="brand" href="./index.html"><span class="brand-mark" aria-hidden="true"></span><span>UNLIMITED LIFE</span></a>\n      <nav class="site-nav" aria-label="メインメニュー"><a href="./index.html">予約</a><a href="./chat.html">チャット相談</a></nav>\n    </header>
 
     <section class="hero">
       <p class="eyebrow">UNLIMITED LIFE NEWSLETTER</p>
