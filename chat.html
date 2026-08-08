@@ -53,7 +53,7 @@
     .example strong { display: block; margin-bottom: 5px; color: var(--ink); font-family: "Hiragino Mincho ProN", "Yu Mincho", serif; font-size: 14px; }
     .chat-card { max-width: 720px; margin: 0 auto; padding: 16px; background: var(--paper); border: 1px solid rgba(255,255,255,.92); border-radius: 26px; box-shadow: var(--shadow); backdrop-filter: blur(18px); }
     #conversations-wrapper { width: 100%; height: 620px; overflow: hidden; border-radius: 17px; background: #fff; }
-    .help { max-width: 720px; margin: 18px auto 0; color: var(--muted); font-size: 11px; line-height: 1.8; text-align: center; }
+    .help { max-width: 720px; margin: 18px auto 0; display: grid; gap: 7px; color: var(--muted); font-size: 11px; line-height: 1.8; text-align: center; }\n    .help p { margin: 0; }\n    .help strong { color: var(--ink); }
     .links { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px 22px; margin-top: 26px; color: var(--muted); font-size: 11px; }
     .links a { color: var(--muted); text-underline-offset: 3px; }
     .links a:hover { color: var(--ink); }
@@ -75,7 +75,7 @@
       injectTo: 'conversations-wrapper',
       locale: {
         customStrings: {
-          welcome: 'こんにちは。お気軽にメッセージしてください。',
+          welcome: 'どんなことを頑張ってきましたか？\n本当はどうなりたかった、どうなりたいって思ってたりしますか？',
           chatWithUs: 'チャットで相談できます',
           leaveUsAMessage: 'メッセージを送る',
           mobile_chatWithUs: 'チャット',
@@ -172,7 +172,7 @@
       <div id="conversations-wrapper"></div>
     </section>
 
-    <p class="help">不在のときも、メッセージとメールアドレスを残していただけます。確認後、順番にお返事します。</p>
+    <div class="help" aria-label="チャットのご利用案内">\n      <p><strong>オンライン時：</strong>この画面で、そのままリアルタイムにお返事します。</p>\n      <p><strong>オフライン時：</strong>お名前とメールアドレスを入力してメッセージを残すと、確認後にメールでお返事します。</p>\n    </div>
 
     <footer class="links">
       <a href="./">体験セッションを予約する</a>
