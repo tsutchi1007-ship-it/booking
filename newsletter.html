@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173f39">
+  <meta name="description" content="Unlimited Life メルマガ。本当に自由な自分の生き方に気づくための言葉をお届けします。">
+  <title>メルマガ登録 | Unlimited Life</title>
+  <style>
+    :root {
+      --ink: #173f39;
+      --ink-2: #285b52;
+      --cream: #f8f4e9;
+      --paper: rgba(255,255,255,.88);
+      --gold: #d8a84e;
+      --line: rgba(23,63,57,.14);
+      --muted: #6d7773;
+      --shadow: 0 24px 70px rgba(23,63,57,.13);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      background:
+        radial-gradient(circle at 7% 4%, rgba(216,168,78,.22), transparent 30%),
+        radial-gradient(circle at 95% 20%, rgba(72,132,117,.18), transparent 32%),
+        var(--cream);
+    }
+    body::before, body::after {
+      content: "";
+      position: fixed;
+      width: 280px;
+      height: 280px;
+      border: 1px solid rgba(23,63,57,.12);
+      transform: rotate(45deg);
+      pointer-events: none;
+      z-index: -1;
+    }
+    body::before { top: -190px; right: 7%; }
+    body::after { bottom: -220px; left: -80px; }
+    a { color: inherit; }
+    .page { width: min(1040px, calc(100% - 32px)); margin: 0 auto; padding: 34px 0 56px; }
+    .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 44px; letter-spacing: .12em; font-weight: 700; text-decoration: none; }
+    .brand-mark { width: 34px; height: 34px; border: 1px solid var(--ink); border-radius: 50%; display: grid; place-items: center; }
+    .brand-mark::after { content: "∞"; font-size: 20px; }
+    .hero { max-width: 720px; margin: 0 auto 28px; text-align: center; }
+    .eyebrow { margin: 0 0 14px; color: var(--ink-2); font-size: 12px; letter-spacing: .18em; font-weight: 700; }
+    h1 { margin: 0; font-family: "Hiragino Mincho ProN", "Yu Mincho", serif; font-size: clamp(38px, 7vw, 62px); line-height: 1.2; font-weight: 500; letter-spacing: -.03em; }
+    h1 em { color: var(--gold); font-style: normal; }
+    .lead { margin: 20px auto 0; max-width: 610px; color: #45534f; font-size: 15px; line-height: 2; }
+    .form-card { max-width: 680px; margin: 0 auto; padding: 18px; background: var(--paper); border: 1px solid rgba(255,255,255,.92); border-radius: 26px; box-shadow: var(--shadow); backdrop-filter: blur(18px); }
+    .form-frame { width: 100%; height: 650px; display: block; border: 0; border-radius: 16px; background: #fff; }
+    .note { max-width: 680px; margin: 20px auto 0; color: var(--muted); font-size: 11px; line-height: 1.8; text-align: center; }
+    .links { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px 22px; margin-top: 28px; color: var(--muted); font-size: 11px; }
+    .links a { text-underline-offset: 3px; }
+    .links a:hover { color: var(--ink); }
+    @media (max-width: 600px) {
+      .page { width: min(100% - 20px, 1040px); padding-top: 24px; }
+      .brand { margin-bottom: 32px; }
+      .form-card { padding: 8px; border-radius: 20px; }
+      .form-frame { height: 700px; border-radius: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <a class="brand" href="./index.html"><span class="brand-mark" aria-hidden="true"></span><span>UNLIMITED LIFE</span></a>
+
+    <section class="hero">
+      <p class="eyebrow">UNLIMITED LIFE NEWSLETTER</p>
+      <h1>本当は自由な自分の<br><em>生き方に気づく。</em></h1>
+      <p class="lead">自分らしく生きるための気づきや、日々を少し軽やかにする言葉をお届けします。下のフォームから無料でご登録いただけます。</p>
+    </section>
+
+    <section class="form-card" aria-label="メルマガ登録フォーム">
+      <iframe class="form-frame" width="540" height="650" src="https://896564b7.sibforms.com/v2/serve/MUIFAJr10VkDE0eaHbV-IV1k-adm-BqM8Z-D9UXAl1LBDIaEHGCC0qYLCa8-a44ZvWYsRFztu1IkLbH0xvdXRTIqWbZv1vY0syK6qqs_2Nqi2_7sbtBhecVrmgqGBnSqtFYQjPqpBB1ywfsQWVxD9OJxz1D11YDvtmej16SJBtb7Hf4m0oZbFqFFJKrf5KF9f-1CbOObhFG7If5xnA==" frameborder="0" scrolling="auto" allowfullscreen title="Unlimited Life メルマガ登録フォーム"></iframe>
+    </section>
+
+    <p class="note">登録後に確認メールが届きます。メール内の案内に従って登録を完了してください。配信はメール内のリンクからいつでも解除できます。</p>
+
+    <footer class="links">
+      <a href="./index.html">体験セッションを予約する</a>
+      <a href="./privacy.html">プライバシーポリシー</a>
+    </footer>
+  </main>
+</body>
+</html>
