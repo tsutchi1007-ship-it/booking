@@ -137,6 +137,27 @@
       .btn-ghost { max-width: none; }
     }
   </style>
+  <script>
+    window.BrevoConversationsSetup = {
+      locale: {
+        chat: {
+          input: {
+            placeholder: 'メッセージを入力してください…'
+          }
+        },
+        contactAttributes: {
+          firstName: '呼ばれたいお名前',
+          lastName: '姓',
+          email: 'メールアドレス'
+        },
+        messageTypes: {
+          joinedFirst: 'チャットに参加しました',
+          joined: '{{#username}}がチャットに参加しました',
+          agentsOffline: 'ただいま不在です'
+        }
+      }
+    };
+  </script>
   <!-- Brevo Conversations -->
   <script>
     (function(d, w, c) {
