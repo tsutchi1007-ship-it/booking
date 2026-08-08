@@ -137,89 +137,12 @@
       .btn-ghost { max-width: none; }
     }
   </style>
-  <script>
-    window.BrevoConversationsSetup = {
-      locale: {
-        customStrings: {
-          welcome: 'こんにちは。お気軽にメッセージしてください。',
-          chatWithUs: 'チャットで相談できます',
-          leaveUsAMessage: 'メッセージを送る',
-          mobile_chatWithUs: 'チャット',
-          mobile_leaveUsAMessage: 'メッセージ',
-          offlineNote: 'ただいま不在です。メッセージを残していただければ、こちらまたはメールでお返事します。',
-          bot_thanksForMessage: 'メッセージありがとうございます。',
-          bot_startOnline: 'できるだけ早くお返事します。',
-          bot_startOnline_email: 'こちらまたはメール（{{#email}}）で、できるだけ早くお返事します。',
-          bot_startOnline_required: 'メッセージを送るために、お名前とメールアドレスを入力してください。',
-          bot_startOffline: '確認後、順番にお返事します。',
-          bot_startOffline_email: 'こちらまたはメール（{{#email}}）でお返事します。',
-          bot_startOffline_required: 'メッセージを送るために、お名前とメールアドレスを入力してください。',
-          bot_beforeForm: 'お名前とメールアドレスを教えてください。',
-          bot_afterForm: 'ありがとうございます。',
-          bot_afterForm_email: 'ありがとうございます。こちらまたはメールでお返事します。',
-          bot_details: 'ご相談内容を、自由にお書きください。'
-        },
-        online: 'オンライン',
-        loading: '読み込み中…',
-        chat: {
-          empty: 'メッセージはまだありません',
-          input: {
-            placeholder: 'メッセージを入力してください…',
-            oneMore: '続けてメッセージを入力…',
-            notIntroduced: 'お名前とメールアドレスを入力してください',
-            reply: '{{#name}}さんへ返信…'
-          },
-          send: '送信',
-          noMessages: 'メッセージはありません',
-          newMessage: '新しいメッセージ',
-          retrievingHistory: '履歴を読み込み中…',
-          more: 'もっと見る',
-          loading: '読み込み中…',
-          introduce: 'お名前とメールアドレスを入力してください',
-          rate: '今回の対応を評価する',
-          insertEmoji: '絵文字を追加'
-        },
-        contactAttributes: {
-          firstName: '呼ばれたいお名前',
-          lastName: '姓',
-          email: 'メールアドレス'
-        },
-        message: 'メッセージ',
-        submit: '送信',
-        saved: '保存しました',
-        change: '変更',
-        cancel: 'キャンセル',
-        messageTypes: {
-          joined: '{{#username}}がチャットに参加しました',
-          left: '{{#username}}が退出しました',
-          agentsOffline: 'ただいま不在です',
-          ratedChat: 'チャットを評価しました'
-        },
-        agent: '担当者',
-        typing: 'が入力中です',
-        areTyping: 'が入力中です',
-        minimize: '最小化'
-      }
-    };
-  </script>
-  <!-- Brevo Conversations -->
-  <script>
-    (function(d, w, c) {
-      w.BrevoConversationsID = '6a76b357f1201c03ff015408';
-      w[c] = w[c] || function() { (w[c].q = w[c].q || []).push(arguments); };
-      var s = d.createElement('script');
-      s.async = true;
-      s.src = 'https://conversations-widget.brevo.com/brevo-conversations.js';
-      if (d.head) d.head.appendChild(s);
-    })(document, window, 'BrevoConversations');
-  </script>
-  <!-- /Brevo Conversations -->
 </head>
 <body>
   <main class="page">
     <header class="site-header">
       <a class="brand" href="./" aria-label="Unlimited Life ホーム"><span class="brand-mark" aria-hidden="true"></span><span>UNLIMITED LIFE</span></a>
-      <nav class="site-nav" aria-label="メインメニュー"><a href="./newsletter.html">メルマガ登録</a><a href="./chat.html">チャット相談</a></nav>
+      <nav class="site-nav" aria-label="メインメニュー"><a href="./newsletter.html">メルマガ登録</a></nav>
     </header>
     <div class="layout">
       <section class="intro">
